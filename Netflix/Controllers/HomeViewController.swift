@@ -23,7 +23,7 @@ class HomeViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
-        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        tableView.tableHeaderView = HomeHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
     }
 
     override func viewDidLayoutSubviews() {
