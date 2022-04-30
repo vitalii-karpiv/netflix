@@ -19,6 +19,7 @@
 		DD5CF855281C74D70093C85F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5CF854281C74D70093C85F /* SearchViewController.swift */; };
 		DD5CF857281C74F80093C85F /* UpcomingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5CF856281C74F80093C85F /* UpcomingViewController.swift */; };
 		DD5CF859281C751A0093C85F /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5CF858281C751A0093C85F /* DownloadsViewController.swift */; };
+		DD98831F281DA6BD0086F72B /* CollectionViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD98831D281DA6BD0086F72B /* CollectionViewTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		DD5CF854281C74D70093C85F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		DD5CF856281C74F80093C85F /* UpcomingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewController.swift; sourceTree = "<group>"; };
 		DD5CF858281C751A0093C85F /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
+		DD98831D281DA6BD0086F72B /* CollectionViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 		DD5CF850281C74420093C85F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DD98831D281DA6BD0086F72B /* CollectionViewTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 			files = (
 				DD5CF857281C74F80093C85F /* UpcomingViewController.swift in Sources */,
 				DD5CF855281C74D70093C85F /* SearchViewController.swift in Sources */,
+				DD98831F281DA6BD0086F72B /* CollectionViewTableViewCell.swift in Sources */,
 				DD5CF859281C751A0093C85F /* DownloadsViewController.swift in Sources */,
 				DD5CF822281C64C80093C85F /* MainTabBarViewController.swift in Sources */,
 				DD5CF81E281C64C80093C85F /* AppDelegate.swift in Sources */,
