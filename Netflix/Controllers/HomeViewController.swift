@@ -9,6 +9,8 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    private let sectionTitles = ["Trending Movies", "Popular", "Trending TV", "Upcoming Movies", "Top Rated"]
+    
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(CollectionViewTableViewCell.self, forCellReuseIdentifier: CollectionViewTableViewCell.identifier)
@@ -24,22 +26,39 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
         tableView.tableHeaderView = HomeHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        
+        configureNavbar()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
     }
+    
+    private func configureNavbar() {
+        var image = UIImage(named: "logo")
+        image = image?.resized(to: CGSize(width: 18.5, height: 30))
+        image = image?.withRenderingMode(.alwaysOriginal)
+        let leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
+            UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
+        ]
+        
+        navigationController?.navigationBar.tintColor = .white
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        return sectionTitles.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "hello"
+        return sectionTitles[section]
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -60,5 +79,27 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         40
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else {return}
+        header.textLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        header.textLabel?.textColor = .white
+        header.textLabel?.text = sectionTitles[section]
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let defauldOffset = view.safeAreaInsets.top
+        let offset = scrollView.contentOffset.y + defauldOffset
+        
+        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
+    }
+}
+
+extension UIImage {
+    func resized(to size: CGSize) -> UIImage {
+        return UIGraphicsImageRenderer(size: size).image { _ in
+            draw(in: CGRect(origin: .zero, size: size))
+        }
     }
 }
