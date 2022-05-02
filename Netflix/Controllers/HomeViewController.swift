@@ -29,6 +29,12 @@ class HomeViewController: UIViewController {
         
         configureNavbar()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        NetworkService.shared.getTrendingMovies { result in
+            // TODO: handle result
+        }
+    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
