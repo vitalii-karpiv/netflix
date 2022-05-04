@@ -9,7 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    private let sectionTitles = ["Trending Movies", "Popular", "Trending TV", "Upcoming Movies", "Top Rated"]
+    private let sectionTitles = Constants.HomeController.SECTION_HEADER_LIST
     
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -31,9 +31,9 @@ class HomeViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        NetworkService.shared.getTrendingMovies { result in
-            // TODO: handle result
-        }
+        NetworkService.shared.fetchData(with: Constants.Endpoints.TOP_RATED_MOVIES, completion: { _ in
+            //
+        })
     }
 
     override func viewDidLayoutSubviews() {
@@ -42,15 +42,15 @@ class HomeViewController: UIViewController {
     }
     
     private func configureNavbar() {
-        var image = UIImage(named: "logo")
+        var image = UIImage(named: Constants.HomeController.LOGO)
         image = image?.resized(to: CGSize(width: 18.5, height: 30))
         image = image?.withRenderingMode(.alwaysOriginal)
         let leftBarButtonItem = UIBarButtonItem(image: image, style: .done, target: self, action: nil)
         navigationItem.leftBarButtonItem = leftBarButtonItem
         
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(systemName: "person"), style: .done, target: self, action: nil),
-            UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
+            UIBarButtonItem(image: UIImage(systemName: Constants.HomeController.PERSON_ICON), style: .done, target: self, action: nil),
+            UIBarButtonItem(image: UIImage(systemName: Constants.HomeController.PLAY_ICON), style: .done, target: self, action: nil)
         ]
         
         navigationController?.navigationBar.tintColor = .white

@@ -19,6 +19,7 @@
 		DD5CF855281C74D70093C85F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5CF854281C74D70093C85F /* SearchViewController.swift */; };
 		DD5CF857281C74F80093C85F /* UpcomingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5CF856281C74F80093C85F /* UpcomingViewController.swift */; };
 		DD5CF859281C751A0093C85F /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5CF858281C751A0093C85F /* DownloadsViewController.swift */; };
+		DD68F18728230D46001199E4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD68F18628230D46001199E4 /* Constants.swift */; };
 		DD98831F281DA6BD0086F72B /* CollectionViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD98831D281DA6BD0086F72B /* CollectionViewTableViewCell.swift */; };
 		DD988322281DAF4D0086F72B /* HomeHeaderUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD988321281DAF4D0086F72B /* HomeHeaderUIView.swift */; };
 		DDF84565282057DB0093D415 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF84564282057DB0093D415 /* NetworkService.swift */; };
@@ -59,6 +60,7 @@
 		DD5CF854281C74D70093C85F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		DD5CF856281C74F80093C85F /* UpcomingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewController.swift; sourceTree = "<group>"; };
 		DD5CF858281C751A0093C85F /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
+		DD68F18628230D46001199E4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DD98831D281DA6BD0086F72B /* CollectionViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableViewCell.swift; sourceTree = "<group>"; };
 		DD988321281DAF4D0086F72B /* HomeHeaderUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderUIView.swift; sourceTree = "<group>"; };
 		DDF84564282057DB0093D415 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -113,13 +115,14 @@
 		DD5CF81C281C64C80093C85F /* Netflix */ = {
 			isa = PBXGroup;
 			children = (
+				DD68F18828230D5E001199E4 /* Utils */,
 				DDF84563282057C20093D415 /* Services */,
 				DD5CF84F281C74350093C85F /* Models */,
 				DD5CF850281C74420093C85F /* Views */,
 				DD5CF851281C745D0093C85F /* ViewModels */,
 				DD5CF84E281C742A0093C85F /* Controllers */,
-				DD5CF821281C64C80093C85F /* MainTabBarViewController.swift */,
 				DD5CF84D281C68010093C85F /* SupportingFiles */,
+				DD5CF821281C64C80093C85F /* MainTabBarViewController.swift */,
 				DD5CF82B281C64CE0093C85F /* Info.plist */,
 			);
 			path = Netflix;
@@ -186,6 +189,14 @@
 			children = (
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		DD68F18828230D5E001199E4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DD68F18628230D46001199E4 /* Constants.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		DDF84563282057C20093D415 /* Services */ = {
@@ -337,6 +348,7 @@
 				DD5CF820281C64C80093C85F /* SceneDelegate.swift in Sources */,
 				DDF8456728205F6C0093D415 /* Movie.swift in Sources */,
 				DD5CF853281C74AD0093C85F /* HomeViewController.swift in Sources */,
+				DD68F18728230D46001199E4 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
