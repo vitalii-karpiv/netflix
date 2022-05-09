@@ -22,7 +22,6 @@ struct NetworkService {
             }
             do {
                 let result = try JSONDecoder().decode(TrendingMovieResult.self, from: data)
-                print(result)
                 completion(.success(result.results))
             } catch {
                 completion(.failure(error))

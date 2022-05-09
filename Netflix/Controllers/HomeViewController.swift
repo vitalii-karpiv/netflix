@@ -72,6 +72,56 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
+        switch indexPath.section {
+        case Constants.Section.TRENDING_MOVIE.rawValue:
+            NetworkService.shared.fetchData(with: Constants.Endpoints.TRENDING_MOVIES) { result in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success(let movies):
+                    cell.configure(with: movies)
+                }
+            }
+        case Constants.Section.TRENDING_TV.rawValue:
+            NetworkService.shared.fetchData(with: Constants.Endpoints.TRENDING_TVS) { result in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success(let movies):
+                    cell.configure(with: movies)
+                }
+            }
+        case Constants.Section.POPULAR.rawValue:
+            NetworkService.shared.fetchData(with: Constants.Endpoints.POPULAR_MOVIES) { result in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success(let movies):
+                    cell.configure(with: movies)
+                }
+            }
+        case Constants.Section.UPCOMING_MOVIES.rawValue:
+            NetworkService.shared.fetchData(with: Constants.Endpoints.UPCOMING_MOVIES) { result in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success(let movies):
+                    cell.configure(with: movies)
+                }
+            }
+        case Constants.Section.TOP_RATED.rawValue:
+            NetworkService.shared.fetchData(with: Constants.Endpoints.TOP_RATED_MOVIES) { result in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success(let movies):
+                    cell.configure(with: movies)
+                }
+            }
+        default:
+            fatalError()
+        }
+        
         return cell
     }
     

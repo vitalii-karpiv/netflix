@@ -11,6 +11,7 @@ struct Constants {
     struct Network {
         static let API_KEY = "916d01362d9a0a976b11bd12c467da5a"
         static let BASE_URL = "https://api.themoviedb.org"
+        static let BASE_MOVIE_URL = "https://image.tmdb.org/t/p/w500/"
     }
 
     struct Endpoints {
@@ -26,5 +27,9 @@ struct Constants {
         static let LOGO = "logo"
         static let PERSON_ICON = "person"
         static let PLAY_ICON = "play.rectangle"
+    }
+    
+    enum Section: Int {
+        case TRENDING_MOVIE, TRENDING_TV, POPULAR, UPCOMING_MOVIES, TOP_RATED
     }
 }
