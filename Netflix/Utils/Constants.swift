@@ -20,6 +20,7 @@ struct Constants {
         static let POPULAR_MOVIES = "movie/popular"
         static let UPCOMING_MOVIES = "movie/upcoming"
         static let TOP_RATED_MOVIES = "movie/top_rated"
+        static let SEARCH_MOVIE = "search/movie"
     }
 
     struct HomeController {

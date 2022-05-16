@@ -29,12 +29,6 @@ class HomeViewController: UIViewController {
         
         configureNavbar()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        NetworkService.shared.fetchData(with: Constants.Endpoints.TOP_RATED_MOVIES, completion: { _ in
-            //
-        })
-    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
