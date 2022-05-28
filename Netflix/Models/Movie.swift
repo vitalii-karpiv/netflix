@@ -17,6 +17,7 @@ struct Movie: Codable {
     let title: String?
     let vote_average: Float?
     let vote_count: Int?
+    let original_name: String?
 }
 
 struct TrendingMovieResult: Codable {

@@ -9,6 +9,7 @@ import Foundation
 
 struct Constants {
     struct Network {
+        static let YOUTUBE_API_KEY = "AIzaSyArytNrwlYIWxHg5nqnIKJiXjkVbmv19NA"
         static let API_KEY = "916d01362d9a0a976b11bd12c467da5a"
         static let BASE_URL = "https://api.themoviedb.org"
         static let BASE_MOVIE_URL = "https://image.tmdb.org/t/p/w500/"

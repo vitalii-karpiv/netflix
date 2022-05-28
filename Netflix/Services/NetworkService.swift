@@ -52,4 +52,25 @@ struct NetworkService {
         task.resume()
     }
     
+    func getMovie(with query: String, completion: @escaping (Result<Trailer?, Error>) -> Void) {
+        guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {return}
+        guard let url = URL(string: "https://youtube.googleapis.com/youtube/v3/search?q=\(query)&key=\(Constants.Network.YOUTUBE_API_KEY)") else {return}
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                if let error = error {
+                    completion(.failure(error))
+                }
+                fatalError()
+            }
+            do {
+                let result = try JSONDecoder().decode(TrailersResult.self, from: data)
+                completion(.success(result.items.first))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        
+        task.resume()
+    }
+    
 }
