@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol CollectionViewTableViewCellDelegate {
+    func collectionViewTableViewDidTapCell(_ cell: CollectionViewTableViewCell, viewModel: MoviePreviewViewModel)
+}
+
 class CollectionViewTableViewCell: UITableViewCell {
     
     static let identifier = "CollectionViewTableViewCell"
     
     private var movieList = [Movie]()
+    
+    var delegate: CollectionViewTableViewCellDelegate?
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -65,15 +71,25 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         guard let movieTitle = movieList[indexPath.row].original_title ?? movieList[indexPath.row].title ?? movieList[indexPath.row].original_name else {return}
-        NetworkService.shared.getMovie(with: "\(movieTitle) trailer") { result in
+        let movieDescription = movieList[indexPath.row].overview
+        
+        NetworkService.shared.getMovie(with: "\(movieTitle) trailer") { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let trailer):
-                if let trailer = trailer {
-                    print(trailer)
+                DispatchQueue.main.async {
+                    if let trailer = trailer {
+                        
+                        guard let strongSelf = self else {return}
+                        
+                        let model = MoviePreviewViewModel(title: movieTitle, description: movieDescription, trailer: trailer)
+                        
+                        strongSelf.delegate?.collectionViewTableViewDidTapCell(strongSelf, viewModel: model)
+                    }
                 }
             }
+            
         }
     }
 }

@@ -66,6 +66,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
+        cell.delegate = self
+        
         switch indexPath.section {
         case Constants.Section.TRENDING_MOVIE.rawValue:
             NetworkService.shared.fetchData(with: Constants.Endpoints.TRENDING_MOVIES) { result in
@@ -144,6 +146,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
+}
+
+extension HomeViewController: CollectionViewTableViewCellDelegate {
+
+    func collectionViewTableViewDidTapCell(_ cell: CollectionViewTableViewCell, viewModel: MoviePreviewViewModel) {
+        let vc = PreviewViewController()
+        vc.configure(with: viewModel)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
 }
 
 extension UIImage {
