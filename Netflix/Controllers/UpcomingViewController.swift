@@ -68,4 +68,24 @@ extension UpcomingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let movieTitle = movies[indexPath.row].original_title ?? movies[indexPath.row].original_name ?? "???"
+        let description = movies[indexPath.row].overview
+        
+        NetworkService.shared.getMovie(with: movieTitle) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case.success(let trailer):
+                DispatchQueue.main.async {
+                    let vc = PreviewViewController()
+                    vc.configure(with: MoviePreviewViewModel(title: movieTitle, description: description, trailer: trailer))
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+        }
+    }
 }

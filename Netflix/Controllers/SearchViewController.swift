@@ -12,7 +12,7 @@ class SearchViewController: UIViewController {
     var movies = [Movie]()
     
     private let searchController: UISearchController = {
-        let searchController = UISearchController(searchResultsController: ResultViewController())
+        let searchController = UISearchController(searchResultsController: SearchResultViewController())
         searchController.searchBar.placeholder = "Search for Movie or Tv show"
         searchController.searchBar.tintColor = .white
         return searchController
@@ -78,6 +78,26 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let movieTitle = movies[indexPath.row].original_title ?? movies[indexPath.row].original_name ?? "???"
+        let description = movies[indexPath.row].overview
+        
+        NetworkService.shared.getMovie(with: movieTitle) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case.success(let trailer):
+                DispatchQueue.main.async {
+                    let vc = PreviewViewController()
+                    vc.configure(with: MoviePreviewViewModel(title: movieTitle, description: description, trailer: trailer))
+                    self?.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+        }
+    }
 }
 
 extension SearchViewController: UISearchResultsUpdating {
@@ -88,7 +108,8 @@ extension SearchViewController: UISearchResultsUpdating {
         guard let query = searchBar.text,
               !query.trimmingCharacters(in: .whitespaces).isEmpty,
               query.trimmingCharacters(in: .whitespaces).count > 2,
-              let resultController = searchController.searchResultsController as? ResultViewController else { return }
+              let resultController = searchController.searchResultsController as? SearchResultViewController else { return }
+        resultController.delegate = self
         
         NetworkService.shared.fetchData(with: Constants.Endpoints.SEARCH_MOVIE, query: query) { result in
             DispatchQueue.main.async {
@@ -104,4 +125,14 @@ extension SearchViewController: UISearchResultsUpdating {
             }
         }
     }
+}
+
+extension SearchViewController: SearchResultViewControllerDelegate {
+    func searchResultViewCellDidTapItem(model: MoviePreviewViewModel) {
+        let vc = PreviewViewController()
+        vc.configure(with: model)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
 }

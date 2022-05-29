@@ -7,9 +7,15 @@
 
 import UIKit
 
-class ResultViewController: UIViewController {
+protocol SearchResultViewControllerDelegate {
+    func searchResultViewCellDidTapItem(model: MoviePreviewViewModel)
+}
+
+class SearchResultViewController: UIViewController {
     
     var movies = [Movie]()
+    
+    var delegate: SearchResultViewControllerDelegate?
     
     let searchResultCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -36,7 +42,7 @@ class ResultViewController: UIViewController {
 
 }
 
-extension ResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
@@ -46,5 +52,23 @@ extension ResultViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let movieTitle = movies[indexPath.row].original_title ?? movies[indexPath.row].original_name ?? "???"
+        let description = movies[indexPath.row].overview
+        
+        NetworkService.shared.getMovie(with: movieTitle) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case.success(let trailer):
+                DispatchQueue.main.async {
+                    self?.delegate?.searchResultViewCellDidTapItem(model: MoviePreviewViewModel(title: movieTitle, description: description, trailer: trailer))
+                }
+            }
+        }
     }
 }

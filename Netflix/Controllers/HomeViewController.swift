@@ -25,7 +25,23 @@ class HomeViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
-        tableView.tableHeaderView = HomeHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        
+        let homeHeaderView = HomeHeaderUIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 450))
+        
+        NetworkService.shared.fetchData(with: Constants.Endpoints.TRENDING_MOVIES) { result in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let movies):
+                DispatchQueue.main.async { [weak self] in
+                    let movie = movies.randomElement()
+                    if let movie = movie {
+                        homeHeaderView.configure(posterUrl: movie.poster_path)
+                        self?.tableView.tableHeaderView = homeHeaderView
+                    }
+                }
+            }
+        }
         
         configureNavbar()
     }

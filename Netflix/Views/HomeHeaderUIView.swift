@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class HomeHeaderUIView: UIView {
     
@@ -43,6 +44,15 @@ class HomeHeaderUIView: UIView {
         addSubview(downloadButton)
         applyConstrains()
     }
+    
+    func configure(posterUrl: String?) {
+        if var posterUrl = posterUrl {
+            posterUrl = Constants.Network.BASE_MOVIE_URL + posterUrl
+            let url = URL(string: posterUrl)
+            headerImageView.sd_setImage(with: url)
+        }
+    }
+    
     
     override func layoutSubviews() {
         super.layoutSubviews()
