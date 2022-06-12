@@ -71,7 +71,6 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         guard let movieTitle = movieList[indexPath.row].original_title ?? movieList[indexPath.row].title ?? movieList[indexPath.row].original_name else {return}
-        let movieDescription = movieList[indexPath.row].overview
         
         NetworkService.shared.getMovie(with: "\(movieTitle) trailer") { [weak self] result in
             switch result {
@@ -82,8 +81,6 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
                     if let trailer = trailer {
                         
                         guard let strongSelf = self else {return}
-                        
-                        let model = MoviePreviewViewModel(title: movieTitle, description: movieDescription, trailer: trailer)
                         
                         strongSelf.delegate?.collectionViewTableViewDidTapCell(strongSelf, model: strongSelf.movieList[indexPath.row], trailer: trailer)
                     }

@@ -38,7 +38,6 @@ class PersistenceService {
         
         do {
             try context.save()
-            print("Successfully saved")
         } catch {
             print(error.localizedDescription)
         }
@@ -56,7 +55,6 @@ class PersistenceService {
         
         do {
             let result = try context.fetch(request)
-            print(result[0])
             return result
         } catch {
             print(error.localizedDescription)

@@ -36,7 +36,6 @@ class DownloadsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("teeest")
         fetchUpcoming()
         downloadsTable.reloadData()
     }
@@ -81,8 +80,8 @@ extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
             case.success(let trailer):
                 if let strongSelf = self {
                     DispatchQueue.main.async {
-                        var selectedMovie = strongSelf.movies[indexPath.row]
-                        var movie = Movie(title: selectedMovie.title, overview: selectedMovie.overview)
+                        let selectedMovie = strongSelf.movies[indexPath.row]
+                        let movie = Movie(title: selectedMovie.title, overview: selectedMovie.overview)
                         let vc = PreviewViewController()
                         vc.configure(with: movie, trailer: trailer)
                         self?.navigationController?.pushViewController(vc, animated: true)
