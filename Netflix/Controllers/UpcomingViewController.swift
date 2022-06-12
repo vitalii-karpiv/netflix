@@ -80,10 +80,12 @@ extension UpcomingViewController: UITableViewDelegate, UITableViewDataSource {
             case .failure(let error):
                 print(error.localizedDescription)
             case.success(let trailer):
-                DispatchQueue.main.async {
-                    let vc = PreviewViewController()
-                    vc.configure(with: MoviePreviewViewModel(title: movieTitle, description: description, trailer: trailer))
-                    self?.navigationController?.pushViewController(vc, animated: true)
+                if let strongSelf = self {
+                    DispatchQueue.main.async {
+                        let vc = PreviewViewController()
+                        vc.configure(with: strongSelf.movies[indexPath.row], trailer: trailer)
+                        self?.navigationController?.pushViewController(vc, animated: true)
+                    }
                 }
             }
         }

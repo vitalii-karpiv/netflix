@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CollectionViewTableViewCellDelegate {
-    func collectionViewTableViewDidTapCell(_ cell: CollectionViewTableViewCell, viewModel: MoviePreviewViewModel)
+    func collectionViewTableViewDidTapCell(_ cell: CollectionViewTableViewCell,model: Movie, trailer: Trailer?)
 }
 
 class CollectionViewTableViewCell: UITableViewCell {
@@ -85,7 +85,7 @@ extension CollectionViewTableViewCell: UICollectionViewDelegate, UICollectionVie
                         
                         let model = MoviePreviewViewModel(title: movieTitle, description: movieDescription, trailer: trailer)
                         
-                        strongSelf.delegate?.collectionViewTableViewDidTapCell(strongSelf, viewModel: model)
+                        strongSelf.delegate?.collectionViewTableViewDidTapCell(strongSelf, model: strongSelf.movieList[indexPath.row], trailer: trailer)
                     }
                 }
             }

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SearchResultViewControllerDelegate {
-    func searchResultViewCellDidTapItem(model: MoviePreviewViewModel)
+    func searchResultViewCellDidTapItem(model: Movie, trailer: Trailer)
 }
 
 class SearchResultViewController: UIViewController {
@@ -58,15 +58,16 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         collectionView.deselectItem(at: indexPath, animated: true)
         
         let movieTitle = movies[indexPath.row].original_title ?? movies[indexPath.row].original_name ?? "???"
-        let description = movies[indexPath.row].overview
         
         NetworkService.shared.getMovie(with: movieTitle) { [weak self] result in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
             case.success(let trailer):
-                DispatchQueue.main.async {
-                    self?.delegate?.searchResultViewCellDidTapItem(model: MoviePreviewViewModel(title: movieTitle, description: description, trailer: trailer))
+                if let strongSelf = self {
+                    DispatchQueue.main.async {
+                        self?.delegate?.searchResultViewCellDidTapItem(model: strongSelf.movies[indexPath.row], trailer: trailer!)
+                    }
                 }
             }
         }

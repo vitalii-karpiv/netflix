@@ -10,6 +10,8 @@ import WebKit
 
 class PreviewViewController: UIViewController {
     
+    private var currentMovie: Movie?
+    
     private let webView: WKWebView = {
         let webView = WKWebView()
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,6 +42,7 @@ class PreviewViewController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = .red
         button.layer.cornerRadius = 8
+        button.addTarget(self, action: #selector(downloadButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -55,12 +58,14 @@ class PreviewViewController: UIViewController {
         configureConstrains()
     }
     
-    func configure(with model: MoviePreviewViewModel) {
+    func configure(with model: Movie, trailer: Trailer?) {
+        
+        currentMovie = model
         
         titleLabel.text = model.title ?? "???"
-        descriptionLabel.text = model.description ?? "???"
+        descriptionLabel.text = model.overview ?? "???"
         
-        if let videoId = model.trailer?.id?.videoId {
+        if let videoId = trailer?.id?.videoId {
             guard let url = URL(string: "https://www.youtube.com/embed/\(videoId)") else {
                 return
             }
@@ -71,6 +76,12 @@ class PreviewViewController: UIViewController {
         }
     }
     
+    
+    @objc private func downloadButtonPressed(sender: UIButton!) {
+        if let saveMovie = currentMovie {
+            PersistenceService.shared.saveMovie(with: saveMovie)
+        }
+    }
     
     private func configureConstrains() {
         let webViewConstrains = [

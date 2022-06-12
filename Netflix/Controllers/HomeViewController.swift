@@ -165,13 +165,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension HomeViewController: CollectionViewTableViewCellDelegate {
-
-    func collectionViewTableViewDidTapCell(_ cell: CollectionViewTableViewCell, viewModel: MoviePreviewViewModel) {
+    
+    func collectionViewTableViewDidTapCell(_ cell: CollectionViewTableViewCell, model: Movie, trailer: Trailer?) {
         let vc = PreviewViewController()
-        vc.configure(with: viewModel)
+        vc.configure(with: model, trailer: trailer)
         navigationController?.pushViewController(vc, animated: true)
     }
-    
     
 }
 
